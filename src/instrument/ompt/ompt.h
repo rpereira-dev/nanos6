@@ -1,0 +1,93 @@
+#ifndef __OMPT_H__
+# define __OMPT_H__
+
+# include <stdint.h>
+
+typedef union   ompt_data_t
+{
+    uint64_t value;
+    void * ptr;
+}               ompt_data_t;
+
+typedef void (*ompt_interface_fn_t) (void);
+
+typedef ompt_interface_fn_t (*ompt_function_lookup_t) (
+    const char * interface_function_name
+);
+
+typedef int (*ompt_initialize_t)(
+    ompt_function_lookup_t lookup,
+    int initial_device_num,
+    ompt_data_t * tool_data
+);
+
+typedef void (*ompt_finalize_t)(ompt_data_t * tool_data);
+
+typedef struct  ompt_start_tool_result_t
+{
+    ompt_initialize_t initialize;
+    ompt_finalize_t finalize;
+    ompt_data_t tool_data;
+}               ompt_start_tool_result_t;
+
+typedef ompt_start_tool_result_t * (*ompt_start_tool_t)(unsigned int , const char *);
+
+typedef enum    ompt_callbacks_t
+{
+    ompt_callback_thread_begin = 1,
+    ompt_callback_thread_end = 2,
+    ompt_callback_parallel_begin = 3,
+    ompt_callback_parallel_end = 4,
+    ompt_callback_task_create = 5,
+    ompt_callback_task_schedule = 6,
+    ompt_callback_implicit_task = 7,
+    ompt_callback_target = 8,
+    ompt_callback_target_data_op = 9,
+    ompt_callback_target_submit = 10,
+    ompt_callback_control_tool = 11,
+    ompt_callback_device_initialize = 12,
+    ompt_callback_device_finalize = 13,
+    ompt_callback_device_load = 14,
+    ompt_callback_device_unload = 15,
+    ompt_callback_sync_region_wait = 16,
+    ompt_callback_mutex_released = 17,
+    ompt_callback_dependences = 18,
+    ompt_callback_task_dependence = 19,
+    ompt_callback_work = 20,
+    ompt_callback_masked = 21,
+    ompt_callback_master /*(deprecated)*/ = ompt_callback_masked,
+    ompt_callback_target_map = 22,
+    ompt_callback_sync_region = 23,
+    ompt_callback_lock_init = 24,
+    ompt_callback_lock_destroy = 25,
+    ompt_callback_mutex_acquire = 26,
+    ompt_callback_mutex_acquired = 27,
+    ompt_callback_nest_lock = 28,
+    ompt_callback_flush = 29,
+    ompt_callback_cancel = 30,
+    ompt_callback_reduction = 31,
+    ompt_callback_dispatch = 32,
+    ompt_callback_target_emi = 33,
+    ompt_callback_target_data_op_emi = 34,
+    ompt_callback_target_submit_emi = 35,
+    ompt_callback_target_map_emi = 36,
+    ompt_callback_error = 37
+}               ompt_callbacks_t;
+
+typedef void (*ompt_callback_t) (void);
+
+typedef enum    ompt_set_result_t {
+    ompt_set_error = 0,
+    ompt_set_never = 1,
+    ompt_set_impossible = 2,
+    ompt_set_sometimes = 3,
+    ompt_set_sometimes_paired = 4,
+    ompt_set_always = 5
+}               ompt_set_result_t;
+
+typedef ompt_set_result_t (*ompt_set_callback_t) (
+    ompt_callbacks_t event,
+    ompt_callback_t callback
+);
+
+#endif /* __OMPT_H__ */

@@ -4,8 +4,8 @@
 	Copyright (C) 2015-2022 Barcelona Supercomputing Center (BSC)
 */
 
-#ifndef INSTRUMENT_NULL_THREAD_MANAGEMENT_HPP
-#define INSTRUMENT_NULL_THREAD_MANAGEMENT_HPP
+#ifndef INSTRUMENT_OMPT_THREAD_MANAGEMENT_HPP
+#define INSTRUMENT_OMPT_THREAD_MANAGEMENT_HPP
 
 
 #include "InstrumentExternalThreadId.hpp"
@@ -84,4 +84,4 @@ namespace Instrument {
 }
 
 
-#endif // INSTRUMENT_NULL_THREAD_MANAGEMENT_HPP
+#endif // INSTRUMENT_OMPT_THREAD_MANAGEMENT_HPP

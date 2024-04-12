@@ -4,8 +4,8 @@
 	Copyright (C) 2015-2022 Barcelona Supercomputing Center (BSC)
 */
 
-#ifndef INSTRUMENT_NULL_TASK_STATUS_HPP
-#define INSTRUMENT_NULL_TASK_STATUS_HPP
+#ifndef INSTRUMENT_OMPT_TASK_STATUS_HPP
+#define INSTRUMENT_OMPT_TASK_STATUS_HPP
 
 
 #include "instrument/api/InstrumentTaskStatus.hpp"
@@ -61,4 +61,4 @@ namespace Instrument {
 }
 
 
-#endif // INSTRUMENT_NULL_TASK_STATUS_HPP
+#endif // INSTRUMENT_OMPT_TASK_STATUS_HPP

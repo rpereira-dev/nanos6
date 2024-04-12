@@ -4,8 +4,8 @@
 	Copyright (C) 2015-2020 Barcelona Supercomputing Center (BSC)
 */
 
-#ifndef INSTRUMENT_NULL_TASK_WAIT_HPP
-#define INSTRUMENT_NULL_TASK_WAIT_HPP
+#ifndef INSTRUMENT_OMPT_TASK_WAIT_HPP
+#define INSTRUMENT_OMPT_TASK_WAIT_HPP
 
 
 #include "instrument/api/InstrumentTaskWait.hpp"
@@ -35,4 +35,4 @@ namespace Instrument {
 }
 
 
-#endif // INSTRUMENT_NULL_TASK_WAIT_HPP
+#endif // INSTRUMENT_OMPT_TASK_WAIT_HPP

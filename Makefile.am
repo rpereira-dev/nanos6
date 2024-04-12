@@ -610,7 +610,7 @@ instrument_extrae_sources = \
 	src/instrument/support/InstrumentThreadLocalDataSupport.cpp
 
 instrument_ompt_sources = \
-	src/instrument/ompt/InstrumentAddTask.hpp
+	src/instrument/ompt/nanos6_ompt.cpp
 
 dist_instrument_sources = \
 	$(instrument_ctf_sources) \
@@ -1018,11 +1018,44 @@ noinst_HEADERS = \
 	src/instrument/support/InstrumentThreadLocalDataSupport.hpp \
 	src/instrument/support/InstrumentCPULocalDataSupport.hpp \
 	src/instrument/support/InstrumentHardwarePlaceManagement.hpp \
-	src/instrument/support/InstrumentInstrumentationContext.hpp \
 	src/instrument/support/InstrumentStandardExternalThreadLocalData.hpp \
 	src/instrument/support/InstrumentThreadInstrumentationContext.hpp \
 	src/instrument/support/InstrumentThreadLocalDataSupport.hpp \
-	src/instrument/ompt/InstrumentAddTask.hpp \
+	src/instrument/ompt/InstrumentAddTask.hpp	\
+	src/instrument/ompt/InstrumentBlockingAPI.hpp \
+	src/instrument/ompt/InstrumentComputePlaceId.hpp \
+	src/instrument/ompt/InstrumentComputePlaceManagement.hpp \
+	src/instrument/ompt/InstrumentCPULocalData.hpp \
+	src/instrument/ompt/InstrumentDataAccessId.hpp \
+	src/instrument/ompt/InstrumentDebug.hpp \
+	src/instrument/ompt/InstrumentDependenciesByAccess.hpp \
+	src/instrument/ompt/InstrumentDependenciesByAccessLinks.hpp \
+	src/instrument/ompt/InstrumentDependenciesByGroup.hpp \
+	src/instrument/ompt/InstrumentDependencySubsystemEntryPoints.hpp \
+	src/instrument/ompt/InstrumentExternalThreadId.hpp \
+	src/instrument/ompt/InstrumentExternalThreadLocalData.hpp \
+	src/instrument/ompt/InstrumentInitAndShutdown.hpp \
+	src/instrument/ompt/InstrumentInstrumentationContext.hpp \
+	src/instrument/ompt/InstrumentLeaderThread.hpp \
+	src/instrument/ompt/InstrumentLogMessage.hpp \
+	src/instrument/ompt/InstrumentMainThread.hpp \
+	src/instrument/ompt/InstrumentMemory.hpp \
+	src/instrument/ompt/InstrumentPthread.hpp \
+	src/instrument/ompt/InstrumentReductions.hpp \
+	src/instrument/ompt/InstrumentScheduler.hpp \
+	src/instrument/ompt/InstrumentTaskExecution.hpp \
+	src/instrument/ompt/InstrumentTaskId.hpp \
+	src/instrument/ompt/InstrumentTaskStatus.hpp \
+	src/instrument/ompt/InstrumentTasktypeData.hpp \
+	src/instrument/ompt/InstrumentTaskWait.hpp \
+	src/instrument/ompt/InstrumentThreadId.hpp \
+	src/instrument/ompt/InstrumentThreadInstrumentationContext.hpp \
+	src/instrument/ompt/InstrumentThreadLocalData.hpp \
+	src/instrument/ompt/InstrumentThreadManagement.hpp \
+	src/instrument/ompt/InstrumentTracingPoints.hpp \
+	src/instrument/ompt/InstrumentTracingPointTypes.hpp \
+	src/instrument/ompt/InstrumentUserMutex.hpp \
+	src/instrument/ompt/InstrumentWorkerThread.hpp \
 	src/instrument/verbose/InstrumentAddTask.hpp \
 	src/instrument/verbose/InstrumentBlockingAPI.hpp \
 	src/instrument/verbose/InstrumentComputePlaceId.hpp \
