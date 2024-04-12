@@ -109,6 +109,8 @@ lib_LTLIBRARIES = \
 	libnanos6-debug-regions-lint.la \
 	libnanos6-debug-discrete-ovni.la \
 	libnanos6-debug-regions-ovni.la \
+	libnanos6-debug-discrete-ompt.la \
+	libnanos6-debug-regions-ompt.la \
 	libnanos6-debug-discrete-verbose.la \
 	libnanos6-debug-regions-verbose.la \
 	libnanos6-optimized-discrete.la \
@@ -121,6 +123,10 @@ lib_LTLIBRARIES = \
 	libnanos6-optimized-regions-lint.la \
 	libnanos6-optimized-discrete-ovni.la \
 	libnanos6-optimized-regions-ovni.la \
+	libnanos6-optimized-discrete-ompt.la \
+	libnanos6-optimized-regions-ompt.la
+	libnanos6-optimized-discrete-ompt.la \
+	libnanos6-optimized-regions-ompt.la \
 	libnanos6-optimized-discrete-verbose.la \
 	libnanos6-optimized-regions-verbose.la
 
@@ -603,9 +609,13 @@ instrument_extrae_sources = \
 	src/instrument/support/InstrumentThreadInstrumentationContext.cpp \
 	src/instrument/support/InstrumentThreadLocalDataSupport.cpp
 
+instrument_ompt_sources = \
+	src/instrument/ompt/InstrumentAddTask.hpp
+
 dist_instrument_sources = \
 	$(instrument_ctf_sources) \
 	$(instrument_extrae_sources) \
+	$(instrument_ompt_sources) \
 	$(instrument_lint_sources) \
 	$(instrument_ovni_sources) \
 	$(instrument_verbose_sources) \
@@ -1012,6 +1022,7 @@ noinst_HEADERS = \
 	src/instrument/support/InstrumentStandardExternalThreadLocalData.hpp \
 	src/instrument/support/InstrumentThreadInstrumentationContext.hpp \
 	src/instrument/support/InstrumentThreadLocalDataSupport.hpp \
+	src/instrument/ompt/InstrumentAddTask.hpp \
 	src/instrument/verbose/InstrumentAddTask.hpp \
 	src/instrument/verbose/InstrumentBlockingAPI.hpp \
 	src/instrument/verbose/InstrumentComputePlaceId.hpp \
@@ -1361,6 +1372,23 @@ else
 nodist_libnanos6_debug_regions_verbose_la_SOURCES += loader/disabled_variant.c
 endif
 
+# Debug ompt variants
+libnanos6_debug_discrete_ompt_la_CPPFLAGS = $(common_libnanos6_cppflags) $(memory_cppflags) -I$(srcdir)/src/instrument/ompt -I$(srcdir)/src/instrument/support
+libnanos6_debug_discrete_ompt_la_CXXFLAGS = $(DBG_CXXFLAGS) $(AM_CXXFLAGS) $(discrete_dependency_flags)
+libnanos6_debug_discrete_ompt_la_LDFLAGS = $(common_libnanos6_ldflags) $(CLOCK_LIBS) $(ANDROID_LOG_LIBS)
+libnanos6_debug_discrete_ompt_la_LIBADD = $(common_libnanos6_libadd)
+nodist_libnanos6_debug_discrete_ompt_la_SOURCES =
+
+libnanos6_debug_regions_ompt_la_CPPFLAGS = $(common_libnanos6_cppflags) $(memory_cppflags) -I$(srcdir)/src/instrument/ompt -I$(srcdir)/src/instrument/support
+libnanos6_debug_regions_ompt_la_CXXFLAGS = $(DBG_CXXFLAGS) $(AM_CXXFLAGS) $(regions_dependency_flags)
+libnanos6_debug_regions_ompt_la_LDFLAGS = $(common_libnanos6_ldflags) $(CLOCK_LIBS) $(ANDROID_LOG_LIBS)
+libnanos6_debug_regions_ompt_la_LIBADD = $(common_libnanos6_libadd)
+nodist_libnanos6_debug_regions_ompt_la_SOURCES =
+
+if DISCRETE_DEPENDENCIES
+nodist_libnanos6_debug_discrete_ompt_la_SOURCES += $(common_sources) $(instrument_ompt_sources) $(memory_sources) $(discrete_dependency_sources) $(nodist_common_sources)
+endif
+
 
 #
 # Optimized variants
@@ -1550,6 +1578,26 @@ disabled_variants += verbose
 nodist_libnanos6_optimized_regions_verbose_la_SOURCES += loader/disabled_variant.c
 endif
 
+# Optimized ompt variants
+libnanos6_optimized_discrete_ompt_la_CPPFLAGS = -DNDEBUG $(common_libnanos6_cppflags) $(memory_cppflags) -I$(srcdir)/src/instrument/ompt -I$(srcdir)/src/instrument/support
+libnanos6_optimized_discrete_ompt_la_CXXFLAGS = $(OPT_CXXFLAGS) $(AM_CXXFLAGS) $(discrete_dependency_flags)
+libnanos6_optimized_discrete_ompt_la_LDFLAGS = $(common_libnanos6_ldflags) $(CLOCK_LIBS) $(ANDROID_LOG_LIBS)
+libnanos6_optimized_discrete_ompt_la_LIBADD = $(common_libnanos6_libadd)
+nodist_libnanos6_optimized_discrete_ompt_la_SOURCES =
+
+libnanos6_optimized_regions_ompt_la_CPPFLAGS = -DNDEBUG $(common_libnanos6_cppflags) $(memory_cppflags) -I$(srcdir)/src/instrument/ompt -I$(srcdir)/src/instrument/support
+libnanos6_optimized_regions_ompt_la_CXXFLAGS = $(OPT_CXXFLAGS) $(AM_CXXFLAGS) $(regions_dependency_flags)
+libnanos6_optimized_regions_ompt_la_LDFLAGS = $(common_libnanos6_ldflags) $(CLOCK_LIBS) $(ANDROID_LOG_LIBS)
+libnanos6_optimized_regions_ompt_la_LIBADD = $(common_libnanos6_libadd)
+nodist_libnanos6_optimized_regions_ompt_la_SOURCES =
+
+if DISCRETE_DEPENDENCIES
+nodist_libnanos6_optimized_discrete_ompt_la_SOURCES += $(common_sources) $(instrument_ompt_sources) $(memory_sources) $(discrete_dependency_sources) $(nodist_common_sources)
+endif
+
+enabled_variants += ompt
+nodist_libnanos6_optimized_regions_ompt_la_SOURCES += $(common_sources) $(instrument_ompt_sources) $(memory_sources) $(regions_dependency_sources) $(nodist_common_sources)
+
 
 if !DISCRETE_DEPENDENCIES
 nodist_libnanos6_debug_discrete_la_SOURCES += loader/disabled_variant.c
@@ -1557,11 +1605,13 @@ nodist_libnanos6_debug_discrete_ctf_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_debug_discrete_extrae_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_debug_discrete_lint_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_debug_discrete_verbose_la_SOURCES += loader/disabled_variant.c
+nodist_libnanos6_debug_discrete_ompt_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_optimized_discrete_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_optimized_discrete_ctf_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_optimized_discrete_extrae_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_optimized_discrete_lint_la_SOURCES += loader/disabled_variant.c
 nodist_libnanos6_optimized_discrete_verbose_la_SOURCES += loader/disabled_variant.c
+nodist_libnanos6_optimized_discrete_ompt_la_SOURCES += loader/disabled_variant.c
 endif
 
 # Deprecated libraries, binaries and docfiles to manually uninstall
@@ -1576,6 +1626,8 @@ deprecated_libs = \
 	libnanos6-stats-papi.la \
 	libnanos6-stats-papi-discrete.la \
 	libnanos6-stats-papi-linear-regions-fragmented.la \
+	libnanos6-ompt.la \
+	libnanos6-ompt-debug.la \
 	libnanos6-verbose.la \
 	libnanos6-verbose-debug.la \
 	libnanos6-null.la \
@@ -1591,6 +1643,8 @@ deprecated_libs = \
 	libnanos6-graph-debug-linear-regions-fragmented.la \
 	libnanos6-lint-linear-regions-fragmented.la \
 	libnanos6-stats-linear-regions-fragmented.la \
+	libnanos6-ompt-linear-regions-fragmented.la \
+	libnanos6-ompt-debug-linear-regions-fragmented.la \
 	libnanos6-verbose-linear-regions-fragmented.la \
 	libnanos6-verbose-debug-linear-regions-fragmented.la \
 	libnanos6-ctf-discrete.la \
@@ -1599,6 +1653,8 @@ deprecated_libs = \
 	libnanos6-extrae-debug-discrete.la \
 	libnanos6-lint-discrete.la \
 	libnanos6-stats-discrete.la \
+	libnanos6-ompt-discrete.la \
+	libnanos6-ompt-debug-discrete.la \
 	libnanos6-verbose-discrete.la \
 	libnanos6-verbose-debug-discrete.la \
 	libnanos6-optimized-discrete-stats.la \
