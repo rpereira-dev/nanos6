@@ -41,6 +41,7 @@ namespace Instrument {
 		__attribute__((unused)) task_id_t taskId,
 		__attribute__((unused)) InstrumentationContext const &context
 	) {
+        // TODO : ompt_callback_task_create
 	}
 
 	inline void enterSubmitTask(
@@ -53,7 +54,6 @@ namespace Instrument {
 		__attribute__((unused)) bool taskRuntimeTransition,
 		__attribute__((unused)) InstrumentationContext const &context
 	) {
-        puts("exitSubmitTask");
 	}
 
 	inline void registeredNewSpawnedTaskType(

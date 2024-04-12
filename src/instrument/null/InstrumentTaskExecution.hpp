@@ -16,10 +16,12 @@
 namespace Instrument {
 	inline void startTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
 	{
+        // TODO ompt_callback_task_schedule ?
 	}
 	
 	inline void endTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
 	{
+        // TODO ompt_callback_task_schedule ?
 	}
 	
 	inline void destroyTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
