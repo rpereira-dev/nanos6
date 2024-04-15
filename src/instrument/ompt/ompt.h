@@ -126,4 +126,22 @@ typedef void (*ompt_callback_task_create_t) (
     const void * codeptr_ra
 );
 
+typedef enum    ompt_task_status_t
+{
+    ompt_task_complete = 1,
+    ompt_task_yield = 2,
+    ompt_task_cancel = 3,
+    ompt_task_detach = 4,
+    ompt_task_early_fulfill = 5,
+    ompt_task_late_fulfill = 6,
+    ompt_task_switch = 7,
+    ompt_taskwait_complete = 8
+}               ompt_task_status_t;
+
+typedef void (*ompt_callback_task_schedule_t) (
+    ompt_data_t * prior_task_data,
+    ompt_task_status_t prior_task_status,
+    ompt_data_t * next_task_data
+);
+
 #endif /* __OMPT_H__ */
