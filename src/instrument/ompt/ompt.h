@@ -71,10 +71,12 @@ typedef enum    ompt_callbacks_t
     ompt_callback_target_data_op_emi = 34,
     ompt_callback_target_submit_emi = 35,
     ompt_callback_target_map_emi = 36,
-    ompt_callback_error = 37
+    ompt_callback_error = 37,
+    ompt_max_callback
 }               ompt_callbacks_t;
 
 typedef void (*ompt_callback_t) (void);
+typedef void (*ompt_callback_generic_t) ();
 
 typedef enum    ompt_set_result_t {
     ompt_set_error = 0,
@@ -88,6 +90,40 @@ typedef enum    ompt_set_result_t {
 typedef ompt_set_result_t (*ompt_set_callback_t) (
     ompt_callbacks_t event,
     ompt_callback_t callback
+);
+
+typedef enum    ompt_thread_t
+{
+    ompt_thread_initial = 1,
+    ompt_thread_worker = 2,
+    ompt_thread_other = 3,
+    ompt_thread_unknown = 4
+}               ompt_thread_t;
+
+typedef void (*ompt_callback_thread_begin_t) (
+    ompt_thread_t thread_type,
+    ompt_data_t * thread_data
+);
+
+typedef void (*ompt_callback_thread_end_t) (
+    ompt_data_t * thread_data
+);
+
+typedef struct  ompt_frame_t
+{
+    ompt_data_t exit_frame;
+    ompt_data_t enter_frame;
+    int exit_frame_flags;
+    int enter_frame_flags;
+}               ompt_frame_t;
+
+typedef void (*ompt_callback_task_create_t) (
+    ompt_data_t * encountering_task_data,
+    const ompt_frame_t * encountering_task_frame,
+    ompt_data_t * new_task_data,
+    int flags,
+    int has_dependences,
+    const void * codeptr_ra
 );
 
 #endif /* __OMPT_H__ */

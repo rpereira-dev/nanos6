@@ -125,8 +125,6 @@ lib_LTLIBRARIES = \
 	libnanos6-optimized-regions-ovni.la \
 	libnanos6-optimized-discrete-ompt.la \
 	libnanos6-optimized-regions-ompt.la
-	libnanos6-optimized-discrete-ompt.la \
-	libnanos6-optimized-regions-ompt.la \
 	libnanos6-optimized-discrete-verbose.la \
 	libnanos6-optimized-regions-verbose.la
 
@@ -610,7 +608,10 @@ instrument_extrae_sources = \
 	src/instrument/support/InstrumentThreadLocalDataSupport.cpp
 
 instrument_ompt_sources = \
-	src/instrument/ompt/nanos6_ompt.cpp
+	src/instrument/ompt/nanos6_ompt.cpp \
+	src/instrument/support/InstrumentThreadLocalDataSupport.cpp \
+	src/instrument/ompt/InstrumentAddTask.cpp \
+	src/instrument/ompt/InstrumentWorkerThread.cpp
 
 dist_instrument_sources = \
 	$(instrument_ctf_sources) \
@@ -1020,7 +1021,6 @@ noinst_HEADERS = \
 	src/instrument/support/InstrumentHardwarePlaceManagement.hpp \
 	src/instrument/support/InstrumentStandardExternalThreadLocalData.hpp \
 	src/instrument/support/InstrumentThreadInstrumentationContext.hpp \
-	src/instrument/support/InstrumentThreadLocalDataSupport.hpp \
 	src/instrument/ompt/InstrumentAddTask.hpp	\
 	src/instrument/ompt/InstrumentBlockingAPI.hpp \
 	src/instrument/ompt/InstrumentComputePlaceId.hpp \
@@ -1056,6 +1056,7 @@ noinst_HEADERS = \
 	src/instrument/ompt/InstrumentTracingPointTypes.hpp \
 	src/instrument/ompt/InstrumentUserMutex.hpp \
 	src/instrument/ompt/InstrumentWorkerThread.hpp \
+	src/instrument/ompt/nanos6_ompt.cpp \
 	src/instrument/verbose/InstrumentAddTask.hpp \
 	src/instrument/verbose/InstrumentBlockingAPI.hpp \
 	src/instrument/verbose/InstrumentComputePlaceId.hpp \

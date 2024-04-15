@@ -12,64 +12,53 @@
 
 
 namespace Instrument {
-	inline task_id_t enterCreateTask(
+	task_id_t enterCreateTask(
 		__attribute__((unused)) nanos6_task_info_t *taskInfo,
 		__attribute__((unused)) nanos6_task_invocation_info_t *taskInvokationInfo,
 		__attribute__((unused)) size_t flags,
 		__attribute__((unused)) bool taskRuntimeTransition,
 		__attribute__((unused)) InstrumentationContext const &context
-	) {
-		return task_id_t();
-	}
+	);
 
-	inline void exitCreateTask(
+	void exitCreateTask(
 		__attribute__((unused)) bool taskRuntimeTransition
-	) {
-	}
+	);
 
-	inline void createdArgsBlock(
+	void createdArgsBlock(
 		__attribute__((unused)) task_id_t taskId,
 		__attribute__((unused)) void *argsBlockPointer,
 		__attribute__((unused)) size_t originalArgsBlockSize,
 		__attribute__((unused)) size_t argsBlockSize,
-		__attribute__((unused)) InstrumentationContext const &context)
-	{
-	}
+		__attribute__((unused)) InstrumentationContext const &context
+    );
 
-	inline void createdTask(
+	void createdTask(
 		__attribute__((unused)) void *task,
 		__attribute__((unused)) task_id_t taskId,
 		__attribute__((unused)) InstrumentationContext const &context
-	) {
-        // TODO : ompt_callback_task_create
-	}
+	);
 
-	inline void enterSubmitTask(
+	void enterSubmitTask(
 		__attribute__((unused)) bool taskRuntimeTransition
-	) {
-	}
+	);
 
-	inline void exitSubmitTask(
+	void exitSubmitTask(
 		__attribute__((unused)) task_id_t taskId,
 		__attribute__((unused)) bool taskRuntimeTransition,
 		__attribute__((unused)) InstrumentationContext const &context
-	) {
-	}
+	);
 
-	inline void registeredNewSpawnedTaskType(
+	void registeredNewSpawnedTaskType(
 		__attribute__((unused)) nanos6_task_info_t *taskInfo
-	) {
-	}
+	);
 
-	inline void enterSpawnFunction(
+	void enterSpawnFunction(
 		__attribute__((unused)) bool taskRuntimeTransition
-	) {
-	}
+	);
 
-	inline void exitSpawnFunction(
+	void exitSpawnFunction(
 		__attribute__((unused)) bool taskRuntimeTransition
-	) {
-	}
+	);
 }
 
 
