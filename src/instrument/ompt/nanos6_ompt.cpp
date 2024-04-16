@@ -34,6 +34,7 @@ nanos6_ompt_set_callback(ompt_callbacks_t event, ompt_callback_t callback)
     results[ompt_callback_thread_begin] = ompt_set_always;
     results[ompt_callback_thread_end] = ompt_set_always;
     results[ompt_callback_task_create] = ompt_set_always;
+    results[ompt_callback_task_schedule] = ompt_set_always;
     // [...] TODO
     return results[event];
 }
