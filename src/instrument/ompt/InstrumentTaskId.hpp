@@ -11,7 +11,13 @@
 
 namespace Instrument {
 	struct task_id_t {
-        ompt_data_t data;
+        public:
+            ompt_data_t data;
+
+            task_id_t() {}
+            task_id_t(const task_id_t & task_id) : data(task_id.data) {}
+
+            ~task_id_t() {}
 	};
 }
 

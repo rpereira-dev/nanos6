@@ -13,24 +13,35 @@
 #include "nanos6_ompt.h"
 #include "ompt.h"
 
+#include <cassert>
+
 void Instrument::startTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
 {
-    // TODO
-    ompt_data_t * prior_task_data = NULL;
+    Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+
+    ompt_data_t * prior_task_data = tld.current_task;
     ompt_task_status_t prior_task_status = ompt_task_switch;
-    ompt_data_t * next_task_data = NULL;
+    ompt_data_t * next_task_data = &(taskId.data);
 
     NANOS6_OMPT_CALLBACK(ompt_callback_task_schedule, prior_task_data, prior_task_status, next_task_data);
+
+    tld.prev_task = prior_task_data;
+    tld.current_task = next_task_data;
 }
 
 void Instrument::endTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
 {
-    // TODO
-    ompt_data_t * prior_task_data = NULL;
-    ompt_task_status_t prior_task_status = ompt_task_switch;
-    ompt_data_t * next_task_data = NULL;
+    Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+    assert(&(taskId.data) == tld.current_task);
+
+    ompt_data_t * prior_task_data = tld.current_task;
+    ompt_task_status_t prior_task_status = ompt_task_complete;
+    ompt_data_t * next_task_data = tld.prev_task;
 
     NANOS6_OMPT_CALLBACK(ompt_callback_task_schedule, prior_task_data, prior_task_status, next_task_data);
+
+    tld.prev_task = prior_task_data;
+    tld.current_task = next_task_data;
 }
 
 void Instrument::destroyTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)

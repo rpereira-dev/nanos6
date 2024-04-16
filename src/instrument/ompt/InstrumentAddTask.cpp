@@ -20,7 +20,23 @@ Instrument::task_id_t Instrument::enterCreateTask(
 	__attribute__((unused)) bool taskRuntimeTransition,
 	__attribute__((unused)) InstrumentationContext const &context
 ) {
-	return Instrument::task_id_t();
+    Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+    ompt_data_t * parent_data = tld.current_task;
+
+    task_id_t task_id;
+    ompt_data_t * child_data = &(task_id.data);
+
+    const ompt_frame_t * frame = NULL;
+    int ompflags = 0;
+    int has_dependences = 1;
+    const void * codeptr_ra = NULL;
+    NANOS6_OMPT_CALLBACK(ompt_callback_task_create, parent_data, frame, child_data, ompflags, has_dependences, codeptr_ra);
+
+    // TODO : forward this to ompt
+    // TaskInfoData *taskInfoData = (TaskInfoData *) taskInfo->task_type_data;
+    // taskInfoData->getTaskTypeLabel().c_str()
+
+	return task_id;
 }
 
 void Instrument::exitCreateTask(
@@ -42,17 +58,6 @@ void Instrument::createdTask(
 	__attribute__((unused)) task_id_t taskId,
 	__attribute__((unused)) InstrumentationContext const &context
 ) {
-    // TODO : ompt_callback_task_create
-    Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
-
-    ompt_data_t * parent_data = NULL;
-    ompt_data_t * child_data = &(taskId.data);
-
-    const ompt_frame_t * frame = NULL;
-    int flags = 0;
-    int has_dependences = 1;
-    const void * codeptr_ra = NULL;
-    NANOS6_OMPT_CALLBACK(ompt_callback_task_create, parent_data, frame, child_data, flags, has_dependences, codeptr_ra);
 }
 
 void Instrument::enterSubmitTask(

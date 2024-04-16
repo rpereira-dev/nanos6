@@ -9,7 +9,7 @@
 
 
 #include <InstrumentInstrumentationContext.hpp>
-
+#include "InstrumentTaskId.hpp"
 #include "ompt.h"
 
 namespace Instrument {
@@ -18,6 +18,7 @@ namespace Instrument {
 	struct ThreadLocalData {
 	    InstrumentationContext _context;
         ompt_data_t data;
+        ompt_data_t * prev_task, * current_task;
 	};
 }
 
