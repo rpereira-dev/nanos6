@@ -63,11 +63,39 @@ void Instrument::workerThreadBegin() {
     }
 
     Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+
+    // thread begin
     NANOS6_OMPT_CALLBACK(ompt_callback_thread_begin, ompt_thread_worker, &(tld.data));
+
+    // implicit task
+    ompt_scope_endpoint_t endpoint = ompt_scope_begin;
+    ompt_data_t * parallel_data = NULL;
+    ompt_data_t * task_data = &(tld.implicit_task_data);
+    unsigned int actual_parallelism = 0;
+    unsigned int index = 0;
+    int flags = 0;
+    NANOS6_OMPT_CALLBACK(ompt_callback_implicit_task, endpoint, parallel_data, task_data, actual_parallelism, index, flags);
+
+    tld.prev_task = NULL;
+    tld.current_task = task_data;
 }
 
 void Instrument::workerThreadEnd() {
     Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+
+    // implicit task
+    ompt_scope_endpoint_t endpoint = ompt_scope_end;
+    ompt_data_t * parallel_data = NULL;
+    ompt_data_t * task_data = &(tld.implicit_task_data);
+    unsigned int actual_parallelism = 0;
+    unsigned int index = 0;
+    int flags = 0;
+    NANOS6_OMPT_CALLBACK(ompt_callback_implicit_task, endpoint, parallel_data, task_data, actual_parallelism, index, flags);
+
+    tld.prev_task = task_data;
+    tld.current_task = NULL;
+
+    // thread end
     NANOS6_OMPT_CALLBACK(ompt_callback_thread_end, &(tld.data));
 }
 

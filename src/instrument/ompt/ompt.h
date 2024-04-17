@@ -144,4 +144,42 @@ typedef void (*ompt_callback_task_schedule_t) (
     ompt_data_t * next_task_data
 );
 
+typedef enum    ompt_dependence_type_t {
+    ompt_dependence_type_in = 1,
+    ompt_dependence_type_out = 2,
+    ompt_dependence_type_inout = 3,
+    ompt_dependence_type_mutexinoutset = 4,
+    ompt_dependence_type_source = 5,
+    ompt_dependence_type_sink = 6,
+    ompt_dependence_type_inoutset = 7
+}               ompt_dependence_type_t;
+
+typedef struct  ompt_dependence_t
+{
+    ompt_data_t variable;
+    ompt_dependence_type_t dependence_type;
+}               ompt_dependence_t;
+
+typedef void (*ompt_callback_dependences_t) (
+    ompt_data_t * task_data,
+    const ompt_dependence_t * deps,
+    int ndeps
+);
+
+typedef enum    ompt_scope_endpoint_t
+{
+    ompt_scope_begin = 1,
+    ompt_scope_end = 2,
+    ompt_scope_beginend = 3
+}               ompt_scope_endpoint_t;
+
+typedef void (*ompt_callback_implicit_task_t) (
+    ompt_scope_endpoint_t endpoint,
+    ompt_data_t *parallel_data,
+    ompt_data_t *task_data,
+    unsigned int actual_parallelism,
+    unsigned int index,
+    int flags
+);
+
 #endif /* __OMPT_H__ */
