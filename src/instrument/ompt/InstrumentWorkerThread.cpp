@@ -6,6 +6,7 @@
 
 #include <atomic>
 #include <dlfcn.h>
+#include <string.h>
 
 #include "instrument/api/InstrumentWorkerThread.hpp"
 #include "instrument/support/InstrumentThreadLocalDataSupport.hpp"
@@ -76,8 +77,8 @@ void Instrument::workerThreadBegin() {
     int flags = 0;
     NANOS6_OMPT_CALLBACK(ompt_callback_implicit_task, endpoint, parallel_data, task_data, actual_parallelism, index, flags);
 
-    tld.prev_task = NULL;
-    tld.current_task = task_data;
+    memset(&tld.prev_task, 0, sizeof(ompt_data_t));
+    tld.current_task = *task_data;
 }
 
 void Instrument::workerThreadEnd() {
@@ -92,8 +93,8 @@ void Instrument::workerThreadEnd() {
     int flags = 0;
     NANOS6_OMPT_CALLBACK(ompt_callback_implicit_task, endpoint, parallel_data, task_data, actual_parallelism, index, flags);
 
-    tld.prev_task = task_data;
-    tld.current_task = NULL;
+    tld.prev_task = *task_data;
+    memset(&tld.current_task, 0, sizeof(ompt_data_t));
 
     // thread end
     NANOS6_OMPT_CALLBACK(ompt_callback_thread_end, &(tld.data));

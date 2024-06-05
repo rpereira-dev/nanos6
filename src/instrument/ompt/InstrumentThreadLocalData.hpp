@@ -19,7 +19,8 @@ namespace Instrument {
 	    InstrumentationContext _context;
         ompt_data_t data;
         ompt_data_t implicit_task_data;
-        ompt_data_t * prev_task, * current_task;
+        ompt_data_t prev_task;
+        ompt_data_t current_task;
 	};
 }
 
