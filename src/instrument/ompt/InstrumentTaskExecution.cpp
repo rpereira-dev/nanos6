@@ -23,6 +23,9 @@ void Instrument::startTask(__attribute__((unused)) task_id_t taskId, __attribute
     ompt_task_status_t prior_task_status = ompt_task_switch;
     ompt_data_t * next_task_data = &(taskId.data);
 
+    if (prior_task_data->value == tld.implicit_task_data.value && next_task_data->value == 0)
+        return ;
+
     NANOS6_OMPT_CALLBACK(ompt_callback_task_schedule, prior_task_data, prior_task_status, next_task_data);
 
     tld.prev_task = *prior_task_data;
@@ -37,6 +40,9 @@ void Instrument::endTask(__attribute__((unused)) task_id_t taskId, __attribute__
     ompt_data_t * prior_task_data = &(tld.current_task);
     ompt_task_status_t prior_task_status = ompt_task_complete;
     ompt_data_t * next_task_data = &(tld.prev_task);
+
+    if (next_task_data->value == 0 && prior_task_data->value == tld.implicit_task_data.value)
+        return ;
 
     NANOS6_OMPT_CALLBACK(ompt_callback_task_schedule, prior_task_data, prior_task_status, next_task_data);
 

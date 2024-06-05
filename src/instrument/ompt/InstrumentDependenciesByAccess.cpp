@@ -19,6 +19,11 @@ void Instrument::registerTaskAccess(
 	__attribute__((unused)) size_t length,
 	__attribute__((unused)) InstrumentationContext const &context
 ) {
+
+    // TODO : ompt does not support weak dependences
+    if (weak)
+        return ;
+
     ompt_data_t * task_data = &(taskId.data);
     int ndeps = 1;
     ompt_dependence_t deps[1];
