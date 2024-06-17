@@ -35,6 +35,7 @@ void Instrument::startTask(__attribute__((unused)) task_id_t taskId, __attribute
 void Instrument::endTask(__attribute__((unused)) task_id_t taskId, __attribute__((unused)) InstrumentationContext const &context)
 {
     Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
+
     assert(taskId.data.value == tld.current_task.value);
 
     ompt_data_t * prior_task_data = &(tld.current_task);

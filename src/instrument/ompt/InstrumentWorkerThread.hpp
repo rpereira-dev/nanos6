@@ -4,8 +4,8 @@
 	Copyright (C) 2020-2023 Barcelona Supercomputing Center (BSC)
 */
 
-#ifndef INSTRUMENT_NULL_WORKERTHREAD_HPP
-#define INSTRUMENT_NULL_WORKERTHREAD_HPP
+#ifndef INSTRUMENT_OMPT_WORKERTHREAD_HPP
+#define INSTRUMENT_OMPT_WORKERTHREAD_HPP
 
 
 #include "instrument/api/InstrumentWorkerThread.hpp"
@@ -32,5 +32,5 @@ namespace Instrument {
 	void exitSpongeMode();
 }
 
-#endif // INSTRUMENT_NULL_WORKERTHREAD_HPP
+#endif // INSTRUMENT_OMPT_WORKERTHREAD_HPP
 

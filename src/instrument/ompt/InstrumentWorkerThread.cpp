@@ -98,6 +98,7 @@ void Instrument::workerThreadEnd() {
 
     // thread end
     NANOS6_OMPT_CALLBACK(ompt_callback_thread_end, &(tld.data));
+
 }
 
 void Instrument::enterHandleTask() {}

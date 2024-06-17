@@ -21,9 +21,10 @@ Instrument::task_id_t Instrument::enterCreateTask(
 	__attribute__((unused)) InstrumentationContext const &context
 ) {
     Instrument::ThreadLocalData & tld = Instrument::getThreadLocalData();
-    ompt_data_t * parent_data = &(tld.current_task);
 
     task_id_t task_id;
+
+    ompt_data_t * parent_data = &(tld.current_task);
     ompt_data_t * child_data = &(task_id.data);
 
     const ompt_frame_t * frame = NULL;

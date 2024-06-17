@@ -21,6 +21,14 @@ namespace Instrument {
         ompt_data_t implicit_task_data;
         ompt_data_t prev_task;
         ompt_data_t current_task;
+
+
+        ThreadLocalData() : _context() {
+            this->data.value = 0;
+            this->implicit_task_data.value = 0;
+            this->prev_task.value = 0;
+            this->current_task.value = 0;
+        }
 	};
 }
 

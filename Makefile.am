@@ -613,6 +613,7 @@ instrument_ompt_sources = \
 	src/instrument/ompt/InstrumentAddTask.cpp \
 	src/instrument/ompt/InstrumentDependenciesByAccess.cpp \
 	src/instrument/ompt/InstrumentTaskExecution.cpp \
+	src/instrument/ompt/InstrumentMainThread.cpp  \
 	src/instrument/ompt/InstrumentWorkerThread.cpp
 
 dist_instrument_sources = \

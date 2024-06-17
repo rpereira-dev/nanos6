@@ -9,15 +9,21 @@
 
 #include "ompt.h"
 
+#include <stdio.h>
+
 namespace Instrument {
 	struct task_id_t {
         public:
             ompt_data_t data;
 
-            task_id_t() {}
+            task_id_t() {
+                data.value = 0;
+            }
+
             task_id_t(const task_id_t & task_id) : data(task_id.data) {}
 
-            ~task_id_t() {}
+            ~task_id_t() {
+            }
 	};
 }
 

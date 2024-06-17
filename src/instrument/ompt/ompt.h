@@ -5,7 +5,14 @@
 
 typedef union   ompt_data_t
 {
-    uint64_t value;
+    union {
+        uint64_t value;
+        struct {
+             uint32_t value_lower;
+             uint32_t value_upper;
+        };
+    };
+
     void * ptr;
 }               ompt_data_t;
 
